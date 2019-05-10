@@ -19,12 +19,15 @@ def login():
     elif request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
+        uid = request.form.get("uid")
 
         hashed_pass = hashlib.sha256(password.encode()).hexdigest()
 
         user = User(name=username, password=hashed_pass)
         User.create(user)
         User.edit(obj_id=user.id)
+
+        print(uid)
 
         return redirect(url_for("account"))
 
