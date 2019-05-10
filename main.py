@@ -15,6 +15,6 @@ def index():
         password = request.form.get("password")
 
         hashed_password = hashlib.sha256(password)
-    
+
 if __name__ == "__main__":
     app.run(debug=True)
