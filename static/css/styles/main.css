@@ -1,0 +1,173 @@
+/*Roboto*/
+
+@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed');
+
+/*Montserrat*/
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600|Montserrat+Alternates:400,600|Montserrat+Subrayada:400,700');
+
+/*Barlow*/
+
+@import url('https://fonts.googleapis.com/css?family=Barlow+Condensed|Barlow+Semi+Condensed|Barlow:400,500,600');
+
+/*Days one*/
+
+@import url('https://fonts.googleapis.com/css?family=Days+One');
+
+body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+html {
+    overflow-y: auto;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+    height: 15px;
+    display: block;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #cdcdcd;
+    -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    height: 50px;
+    background-color: #D6242F;
+    -webkit-border-radius: 6px;
+}
+
+a {
+    text-decoration: none!important;
+}
+
+.icon {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 0);
+    font-family: montserrat, sans-serif;
+    font-size: 15vh;
+    color: #8F1D2C;
+}
+
+p {
+    position: absolute;
+    left: 50%;
+    top: 17vh;
+    transform: translate(-50%, 0);
+    text-transform: uppercase;
+    font-family: montserrat, sans-serif;
+    font-size: 4vh;
+    color: #343434;
+}
+span {
+    font-weight: 600;
+}
+
+form {
+    position: absolute;
+    height: 48vh;
+    width: 50vw;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: 20vh;
+}
+
+.user {
+    position: absolute;
+    top: 25vh;
+}
+
+.pass {
+    position: absolute;
+    top: 33vh;
+}
+
+input {
+    height: 50px;
+    width: 100%;
+    max-width: 450px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 0 20px;
+    border: 3px solid #8F1D2C;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 30px;
+    transition: all 1s;
+}
+
+input::placeholder {
+    color: #cdcdcd;
+    font-family: "montserrat", sans-serif;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.submit {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: block;
+    height: 50px;
+    line-height: 32px;
+    border-radius: 30px;
+    color: #fff;
+    border: 3px solid #343434;
+    background-color: #343434;
+    text-align: center;
+    transition: all .15s;
+    text-transform: uppercase;
+    font-family: montserrat, barlow, sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    padding: 0 20px;
+}
+
+.submit:hover {
+    background-color: #fff;
+    color: #343434;
+}
+
+#map {
+    position: absolute;
+    height: 400px;
+    width: 100%;
+    top: 100vh;
+    left: 50%;
+    transform: translate(-50%, 0);
+}

@@ -1,9 +1,9 @@
 from smartninja_nosql.odm import Model
 
 class User(Model):
-    def __init__(self, name, email, password, **kwargs):
+    def __init__(self, name, password, **kwargs):
         self.name = name
-        self.email = email
         self.password = password
+        # self.coordinates = coordinates
         
         super().__init__(**kwargs)

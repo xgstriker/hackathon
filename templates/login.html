@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Login from location</title>
+
+    <!-- styles -->
+    <link rel="stylesheet" href="/static/css/styles/main.css">
+
+    <!-- JavaScript files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/static/js/common.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="/static/css/bootstrap/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/bootstrap.js"></script>
+</head>
+<body>
+	<div class="content">
+		<form class="row" method="post" action="/account">
+			<div class="icon">#</div>
+			<p><span>Secure</span>Login</p>
+			<input class="user" type="text" name="username" placeholder="Username">
+			<input class="pass" type="password" name="password" required="True" placeholder="Password">
+			<button class="submit" type="submit">Submit</button>
+		</form>
+	</div>
+</body>
+</html>

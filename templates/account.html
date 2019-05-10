@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Login from location</title>
+
+    <!-- styles -->
+    <link rel="stylesheet" href="/static/css/styles/account.css">
+
+    <!-- JavaScript files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/static/js/common.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="/static/css/bootstrap/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/bootstrap.js"></script>
+</head>
+<body>
+	<div class="content">
+		<form class="row" method="post" action="/account">
+			<div class="icon noselect">#</div>
+			<p class="noselect"><span>Secure</span>Login</p>
+			<input class="user" type="text" name="username" placeholder="Username">
+			<input class="pass" type="password" name="password" required="True" placeholder="Password">
+			<button onClick="autoFill(); return true;">Save Coordinates</button>
+			<button class="submit" type="submit">Submit</button>
+		</form>
+		
+		<div id="map"></div>
+		<form action="/account">
+			<input id="lat" name="lat" type="number">
+			<input id="lng" name="lng" type="number">
+			<button class="mapsubmit" type="submit">SetLocation</button>
+		</form>
+
+		<script>
+			// Initialize and add the map
+			function initMap() {
+			  	// The location of Uluru
+			  	var uluru = {lat: {{ lat }}, lng: {{ lng }}};
+	
+			  	// The map, centered at Uluru
+			  	var map = new google.maps.Map(
+			  	    document.getElementById('map'), {zoom: 18, center: uluru});
+	
+			  	// The marker, positioned at Uluru
+				var marker = new google.maps.Marker({
+				    position: uluru,
+				    map: map,
+				    draggable:true,
+				    title:"Drag me!"
+				});
+
+				var lat = marker.getPosition().lat();
+				var lng = marker.getPosition().lng();
+				
+
+  				function autoFill() {
+  					document.getElementById('lat').value = lat;
+  					document.getElementById('lng').value = lng;
+  				}
+
+			}
+    	</script>
+
+    	<script async defer
+    		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZ1ZzwzPziD8B231uiXVP3qyQaCbFYlWw&callback=initMap">
+    	</script>
+	</div>
+</body>
+</html>
