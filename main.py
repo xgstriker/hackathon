@@ -14,9 +14,7 @@ app = Flask(__name__)
 def index():
     if request.method == "GET":
 
-        num = 1
         response = make_response(render_template("index.html"))
-        response.set_cookie("num", str(num))
         return response
     elif request.method == "POST":
         lat = request.form.get("lat")
@@ -54,13 +52,17 @@ def login():
         if data['User']['1']['password'] == password and value["uID"]['1']['value'] == uid:
             response = redirect(url_for("account"))
 
+            num = 1
             response.set_cookie("username", username)
+            response.set_cookie("num", str(num))
             return response
 
         elif data['User']['2']['password'] == password and value["uID"]['2']['value'] == uid:
             response = redirect(url_for("account"))
 
+            num = 1
             response.set_cookie("username", username)
+            response.set_cookie("num", str(num))
             return response
         else:
             return render_template("noaccess.html")
