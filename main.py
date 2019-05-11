@@ -51,14 +51,19 @@ def login():
         data = json.load(json_data)
         print(data)
 
-        for x in range(1, 2):
-            if data['User'][f"{x}"]['password'] == password and value["uID"][f"{x}"]['value'] == uid:
-                response = redirect(url_for("account"))
+        if data['User']['1']['password'] == password and value["uID"]['2']['value'] == uid:
+            response = redirect(url_for("account"))
 
-                response.set_cookie("username", username)
-                return response
+            response.set_cookie("username", username)
+            return response
 
-        return render_template("noaccess.html")
+        elif data['User']['1']['password'] == password and value["uID"]['2']['value'] == uid:
+            response = redirect(url_for("account"))
+
+            response.set_cookie("username", username)
+            return response
+        else:
+            return render_template("noaccess.html")
 
 
 @app.route("/account", methods=['GET', 'POST'])
