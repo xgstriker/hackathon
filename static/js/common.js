@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	$('.mapsave').click(function() {
+	$('.marker').click(function() {
 		$('.mapsubmit').addClass('active');
 	});
 

@@ -13,7 +13,7 @@ app = Flask(__name__)
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("index.html", https=True)
     elif request.method == "POST":
         lat = float(request.form.get("lat"))
         lng = float(request.form.get("lng"))
@@ -21,7 +21,7 @@ def index():
         rlat = 54.6841
         rlng = 25.2860
 
-        if abs(rlat-lat) < 0.001 and abs(rlng-lng) < 0.01:
+        if abs(rlat-lat) < 0.01 and abs(rlng-lng) < 0.01:
             return redirect(url_for("login"))
         else:
             return render_template("noaccess.html")
