@@ -18,27 +18,49 @@
 </head>
 <body>
 	<div class="content">
-		<form class="row" method="post" action="/account">
-			<div class="icon noselect">#</div>
-			<p class="noselect"><span>Secure</span>Login</p>
-			<input class="user" type="text" name="username" placeholder="Username">
-			<input class="pass" type="password" name="password" required="True" placeholder="Password">
-			<button onClick="autoFill(); return true;">Save Coordinates</button>
-			<button class="submit" type="submit">Submit</button>
+		<div class="icon noselect">#</div>
+		<p class="noselect"><span>Secure</span>Login</p>
+
+		<ul class="greetings">
+			<li>Hello <strong>{{ name }}</strong>,</li>
+		</ul>
+		
+		<div class="man_loc">Manage locations</div>
+		<ul class="locations">
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+		</ul>
+
+		<div class="new-loc">Add location</div>
+		
+		<div class="desc">Drag the marker to set the location</div>
+
+		<form method="post" action="/account">
+			<input id="lat" name="lat" type="text">
+			<input id="lng" name="lng" type="text">
+			<button class="active mapsubmit" type="submit">SetLocation</button>
 		</form>
 		
 		<div id="map"></div>
-		<form action="/account">
-			<input id="lat" name="lat" type="number">
-			<input id="lng" name="lng" type="number">
-			<button class="mapsubmit" type="submit">SetLocation</button>
-		</form>
+
 
 		<script>
 			// Initialize and add the map
 			function initMap() {
 			  	// The location of Uluru
-			  	var uluru = {lat: {{ lat }}, lng: {{ lng }}};
+			  	var uluru = {lat: {{ flat }}, lng: {{ flng }}};
 	
 			  	// The map, centered at Uluru
 			  	var map = new google.maps.Map(
@@ -52,16 +74,13 @@
 				    title:"Drag me!"
 				});
 
-				var lat = marker.getPosition().lat();
-				var lng = marker.getPosition().lng();
-				
 
-  				function autoFill() {
-  					document.getElementById('lat').value = lat;
-  					document.getElementById('lng').value = lng;
-  				}
+				google.maps.event.addListener(marker, 'dragend', function (evt) {
+				    document.getElementById('lat').value = evt.latLng.lat().toFixed(4);
+				    document.getElementById('lng').value = evt.latLng.lng().toFixed(4);
+				});
 
-			}
+  			}
     	</script>
 
     	<script async defer

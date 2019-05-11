@@ -97,7 +97,7 @@ span {
 
 form {
     position: absolute;
-    height: 48vh;
+    height: 55vh;
     width: 50vw;
     left: 50%;
     transform: translate(-50%, 0);
@@ -111,11 +111,18 @@ form {
 
 .pass {
     position: absolute;
-    top: 33vh;
+    top: 36vh;
+}
+.uid {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border: none;
 }
 
 input {
-    height: 50px;
+    height: 50px;   
     width: 100%;
     max-width: 450px;
     left: 50%;

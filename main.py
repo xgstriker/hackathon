@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, make_response, redirect, url_for
-from models import User, Loc
+from models import User
 import json
+import os
+os.environ["TESTING"] = "1"
 
-import uuid, hashlib
 app = Flask(__name__)
 
 
@@ -14,10 +15,10 @@ def index():
         lat = float(request.form.get("lat"))
         lng = float(request.form.get("lng"))
 
-        rlat = 54.68411
-        rlng = 25.28601
+        rlat = 54.6841
+        rlng = 25.2860
 
-        if abs(rlat-lat) < 0.0001 and abs(rlng-lng) < 0.0001:
+        if abs(rlat-lat) < 0.01 and abs(rlng-lng) < 0.01:
             return redirect(url_for("login"))
         else:
             return render_template("noaccess.html")
@@ -28,35 +29,33 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     elif request.method == "POST":
+        import hashlib
         username = request.form.get("username")
-        password = request.form.get("password")
+        password = hashlib.sha256(request.form.get("password").encode()).hexdigest()
         uid = request.form.get("uid")
 
-        user = User(name=username, password=password)
-        User.create(user)
-        User.edit(obj_id=user.id)
+        json_data = open("db.json", "r")
+        data = json.load(json_data)
 
-        print(uid)
+        user_name = data['User']['1']['name']
+        user_pass = data['User']['1']['password']
 
-        return redirect(url_for("account"))
+        print(username, password, user_name, user_pass)
+        if user_pass != password:
+            return render_template("noaccess.html")
+        elif user_pass == password:
+            return redirect(url_for("account"))
 
 
 @app.route("/account", methods=['GET', 'POST'])
 def account():
     if request.method == "GET":
-        return render_template("account.html", lat=54.684144, lng=25.285807)
+        return render_template("account.html", flat=54.684144, flng=25.285807, name="Bolek")
     elif request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-
-        hashed_pass = hashlib.sha256(password.encode()).hexdigest()
-
-        user = User(name=username, password=hashed_pass)
-        User.create(user)
-        User.edit(obj_id=user.id)
+        lat = request.form.get("lat")
+        lng = request.form.get("lng")
 
         response = render_template("success.html")
-
         return response
 
 

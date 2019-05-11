@@ -72,35 +72,127 @@ a {
 
 .icon {
     position: absolute;
-    left: 50%;
-    top: 0;
-    transform: translate(-50%, 0);
+    left: 4vw;
+    bottom: 0vh;
     font-family: montserrat, sans-serif;
-    font-size: 15vh;
+    font-size: 6vw;
     color: #8F1D2C;
 }
 
 p {
     position: absolute;
-    left: 50%;
-    top: 17vh;
-    transform: translate(-50%, 0);
+    left: 9vw;
+    bottom: 0vw;
     text-transform: uppercase;
     font-family: montserrat, sans-serif;
-    font-size: 4vh;
-    color: #343434;
+    font-size: 3vw;
+    color: #8F1D2C;
 }
 span {
     font-weight: 600;
 }
 
+
+.greetings {
+    position: absolute;
+    height: 10vw;
+    width: 20vw;
+    left: 4vw;
+    top: 3vw;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.greetings li {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    font-size: 1.2em;
+    font-family: montserrat, sans-serif;
+    font-weight: 400;
+}
+
+.locations {
+    position: absolute;
+    top: 21vh;
+    left: 4vw;
+    width: 30vw;
+    list-style: none;
+    height: 60vh;
+    border-radius: 10px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    border: 3px solid #cdcdcd;
+}
+.locations li {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-family: montserrat, sans-serif;
+    font-weight: 600;
+    padding: 0 4%;
+}
+.locations li:hover {
+    background-color: #F8F8F8;
+}
+.locations li img {
+    position: absolute;
+    height: 10px;
+    right: 25px;
+    top: 20px;
+    transform: translate(50%, -50%);
+    cursor: pointer;
+}
+
+
+.man_loc {
+    position: absolute;
+    top: 15vh;
+    left: 4vw;
+    width: 30vw;
+    text-transform: uppercase;
+    font-family: montserrat, sans-serif;
+    color: #8F1D2C;
+    font-size: 1.3vw;
+    font-weight: 600;
+    border-bottom: solid 2px #8F1D2C;
+}
+
+
+.new-loc {
+    position: absolute;
+    top: 5vh;
+    left: 50vw;
+    width: 45vw;
+    text-transform: uppercase;
+    font-family: montserrat, sans-serif;
+    color: #8F1D2C;
+    font-size: 2vw;
+    font-weight: 600;
+    border-bottom: solid 2px #8F1D2C;
+}
+
+.desc {
+    position: absolute;
+    top: 8vh;
+    right: 2vw;
+    width: 20vw;
+    text-transform: uppercase;
+    font-family: montserrat, sans-serif;
+    color: #343434;
+    font-size: .8vw;
+    font-weight: 400;
+}
+
 form {
     position: absolute;
-    height: 48vh;
-    width: 50vw;
-    left: 50%;
-    transform: translate(-50%, 0);
-    top: 20vh;
+    height: 30vh;
+    width: 45vw;
+    left: 50vw;
+    bottom: 3vh;
 }
 
 .user {
@@ -114,16 +206,17 @@ form {
 }
 
 input {
+    top: 10vh;
     height: 50px;
     width: 100%;
     max-width: 450px;
-    left: 50%;
-    transform: translate(-50%, 0);
+    left: 0%;
     padding: 0 20px;
     border: 3px solid #8F1D2C;
     background-color: rgba(255, 255, 255, 0.4);
     border-radius: 30px;
     transition: all 1s;
+    z-index: 999;
 }
 
 input::placeholder {
@@ -136,37 +229,43 @@ input:focus {
     outline: none;
 }
 
-.submit {
+.active {
+    border: 3px solid #005F00!important;
+    background-color: #005F00!important;
+}
+.active:hover {
+    background-color: #fff!important;
+    color: #005F00!important;
+}
+
+
+.mapsubmit {
     position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
+    bottom: 0vh;
+    right: 0%;
     display: block;
-    height: 50px;
-    line-height: 32px;
+    height: 6vh;
+    width: 45vw;
+    line-height: 5vh;
     border-radius: 30px;
     color: #fff;
-    border: 3px solid #343434;
-    background-color: #343434;
+    border: 3px solid #cdcdcd;
+    background-color: #cdcdcd;
     text-align: center;
     transition: all .15s;
     text-transform: uppercase;
     font-family: montserrat, barlow, sans-serif;
-    font-size: 19px;
+    font-size: 1.5vw;
     font-weight: 600;
     padding: 0 20px;
 }
 
-.submit:hover {
-    background-color: #fff;
-    color: #343434;
-}
 
 #map {
     position: absolute;
-    height: 400px;
-    width: 100%;
-    top: 100vh;
-    left: 50%;
-    transform: translate(-50%, 0);
+    height: 75vh;
+    width: 45vw;
+    top: 12.5vh;
+    left: 50vw;
+    background-color: #000;
 }
