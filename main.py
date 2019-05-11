@@ -51,13 +51,13 @@ def login():
         data = json.load(json_data)
         print(data)
 
-        if data['User']['1']['password'] == password and value["uID"]['2']['value'] == uid:
+        if data['User']['1']['password'] == password and value["uID"]['1']['value'] == uid:
             response = redirect(url_for("account"))
 
             response.set_cookie("username", username)
             return response
 
-        elif data['User']['1']['password'] == password and value["uID"]['2']['value'] == uid:
+        elif data['User']['2']['password'] == password and value["uID"]['2']['value'] == uid:
             response = redirect(url_for("account"))
 
             response.set_cookie("username", username)
