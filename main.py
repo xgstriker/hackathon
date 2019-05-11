@@ -13,18 +13,25 @@ app = Flask(__name__)
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if request.method == "GET":
-        return render_template("index.html")
+
+        num = 1
+        response = make_response(render_template("index.html"))
+        response.cookie.set("num", num)
+        return response
     elif request.method == "POST":
         lat = float(request.form.get("lat"))
         lng = float(request.form.get("lng"))
 
-        rlat = 54.6841
-        rlng = 25.2860
-
-        if abs(rlat-lat) < 0.01 and abs(rlng-lng) < 0.01:
+        if lat == "" or lng == "":
             return redirect(url_for("login"))
         else:
-            return render_template("noaccess.html")
+            rlat = 54.6841
+            rlng = 25.2860
+
+            if abs(rlat-lat) < 0.01 and abs(rlng-lng) < 0.01:
+                return redirect(url_for("login"))
+            else:
+                return render_template("noaccess.html")
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -44,10 +51,7 @@ def login():
         data = json.load(json_data)
         print(data)
 
-        stop = data['User']['1']['name']
-
-        x = 1
-        while stop != "":
+        for x in range(1, 3):
             if data['User'][f"{x}"]['password'] == password and value["uID"][f"{x}"]['value'] == uid:
                 response = redirect(url_for("account"))
 
@@ -57,8 +61,6 @@ def login():
                 response.set_cookie("username", username, expires=date)
                 response.set_cookie("session_token", str(session_token), expires=date)
                 return response
-            x += 1
-            stop = data['User'][f"{x}"]['name']
 
         return render_template("noaccess.html")
 
@@ -71,19 +73,17 @@ def account():
             json_data = open("test_db.json", "r")
             data = json.load(json_data)
 
-            num = request.cookies.get("num")
-
             lats = []
             lngs = []
             locations = []
             positions = []
-            for x in range(1, int(num)):
-                lats.append(data['Loc'][f'{x}']['lat'])
-                lngs.append(data['Loc'][f'{x}']['lng'])
-                lat = data['Loc'][f'{x}']['lat']
-                lng = data['Loc'][f'{x}']['lng']
-                locations.append(data['Loc'][f'{x}']['locname'])
-                positions.append("{"+f"lat: {lat}, lng: {lng}"+"}")
+            num = int(request.cookies.get('num'))
+            for x in range(1, num):
+                if data['Loc'][f'{x}']['lat'] != "" or data['Loc'][f'{x}']['lng'] != "":
+                    lat = data['Loc'][f'{x}']['lat']
+                    lng = data['Loc'][f'{x}']['lng']
+                    locations.append(data['Loc'][f'{x}']['locname'])
+                    positions.append("{"+f"lat: {lat}, lng: {lng}"+"}")
             username = request.cookies.get("username")
             response = make_response(render_template("account.html", locations=locations, lats=lats, name=username, flat=54.6841,
                                                      lngs=lngs, flng=25.2858, positions=positions))

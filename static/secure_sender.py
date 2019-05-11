@@ -15,7 +15,7 @@ def main():
         driver = webdriver.Chrome(ChromeDriverManager().install())
         uid = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
         print(uid)
-        driver.get(("http://secureelogin.herokuapp.com/"))
+        driver.get(("http://secureelogin.herokuapp.com/login"))
         time.sleep(1)
         username = driver.find_element_by_name('username')
         username.send_keys("bolexptk")
