@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="74b5986b-2d85-4799-a3c5-f8f94f7b6517" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/db.json" beforeDir="false" afterPath="$PROJECT_DIR$/db.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_db.json" beforeDir="false" afterPath="$PROJECT_DIR$/test_db.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +17,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+            <state relative-caret-position="78">
+              <caret line="30" column="57" lean-forward="true" selection-start-line="30" selection-start-column="57" selection-end-line="30" selection-end-column="57" />
               <folding>
                 <element signature="e#0#83#0" expanded="true" />
               </folding>
@@ -37,7 +39,7 @@
         <entry file="file://$PROJECT_DIR$/test_db.json">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="321" lean-forward="true" selection-start-column="321" selection-end-column="321" />
+              <caret column="525" selection-start-column="525" selection-end-column="525" />
             </state>
           </provider>
         </entry>
@@ -66,6 +68,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>print</find>
+      <find>float</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -77,8 +80,8 @@
         <option value="$PROJECT_DIR$/__init__.pyy.py" />
         <option value="$PROJECT_DIR$/db.json" />
         <option value="$PROJECT_DIR$/models.py" />
-        <option value="$PROJECT_DIR$/test_db.json" />
         <option value="$PROJECT_DIR$/static/secure_sender.py" />
+        <option value="$PROJECT_DIR$/test_db.json" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
@@ -253,14 +256,14 @@
     <entry file="file://$PROJECT_DIR$/test_db.json">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="321" lean-forward="true" selection-start-column="321" selection-end-column="321" />
+          <caret column="525" selection-start-column="525" selection-end-column="525" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+        <state relative-caret-position="78">
+          <caret line="30" column="57" lean-forward="true" selection-start-line="30" selection-start-column="57" selection-end-line="30" selection-end-column="57" />
           <folding>
             <element signature="e#0#83#0" expanded="true" />
           </folding>

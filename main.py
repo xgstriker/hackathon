@@ -16,11 +16,11 @@ def index():
 
         num = 1
         response = make_response(render_template("index.html"))
-        response.cookies.set("num", num)
+        response.set_cookie("num", str(num))
         return response
     elif request.method == "POST":
-        lat = float(request.form.get("lat"))
-        lng = float(request.form.get("lng"))
+        lat = request.form.get("lat")
+        lng = request.form.get("lng")
 
         if lat == "" or lng == "":
             return redirect(url_for("login"))
@@ -28,7 +28,7 @@ def index():
             rlat = 54.6841
             rlng = 25.2860
 
-            if abs(rlat-lat) < 0.01 and abs(rlng-lng) < 0.01:
+            if abs(rlat-lat) < 0.1 and abs(rlng-lng) < 0.1:
                 return redirect(url_for("login"))
             else:
                 return render_template("noaccess.html")
@@ -51,15 +51,11 @@ def login():
         data = json.load(json_data)
         print(data)
 
-        for x in range(1, 1):
+        for x in range(1, 2):
             if data['User'][f"{x}"]['password'] == password and value["uID"][f"{x}"]['value'] == uid:
                 response = redirect(url_for("account"))
 
-                date = datetime.now() + timedelta(minutes=1)
-                session_token = uuid.uuid4()
-
-                response.set_cookie("username", username, expires=date)
-                response.set_cookie("session_token", str(session_token), expires=date)
+                response.set_cookie("username", username)
                 return response
 
         return render_template("noaccess.html")
