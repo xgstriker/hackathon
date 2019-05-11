@@ -51,7 +51,7 @@ def login():
         data = json.load(json_data)
         print(data)
 
-        for x in range(1, 3):
+        for x in range(1, 1):
             if data['User'][f"{x}"]['password'] == password and value["uID"][f"{x}"]['value'] == uid:
                 response = redirect(url_for("account"))
 

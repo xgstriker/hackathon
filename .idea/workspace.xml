@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="74b5986b-2d85-4799-a3c5-f8f94f7b6517" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/loc.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/loc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/secure_sender.py" beforeDir="false" afterPath="$PROJECT_DIR$/static/secure_sender.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="79" column="49" selection-start-line="79" selection-start-column="49" selection-end-line="79" selection-end-column="49" />
+            <state relative-caret-position="102">
+              <caret line="53" column="27" selection-start-line="53" selection-start-column="27" selection-end-line="53" selection-end-column="27" />
               <folding>
                 <element signature="e#0#83#0" expanded="true" />
               </folding>
@@ -39,7 +37,7 @@
         <entry file="file://$PROJECT_DIR$/test_db.json">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="252" lean-forward="true" selection-start-column="252" selection-end-column="252" />
+              <caret column="321" lean-forward="true" selection-start-column="321" selection-end-column="321" />
             </state>
           </provider>
         </entry>
@@ -255,14 +253,14 @@
     <entry file="file://$PROJECT_DIR$/test_db.json">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="252" lean-forward="true" selection-start-column="252" selection-end-column="252" />
+          <caret column="321" lean-forward="true" selection-start-column="321" selection-end-column="321" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="79" column="49" selection-start-line="79" selection-start-column="49" selection-end-line="79" selection-end-column="49" />
+        <state relative-caret-position="102">
+          <caret line="53" column="27" selection-start-line="53" selection-start-column="27" selection-end-line="53" selection-end-column="27" />
           <folding>
             <element signature="e#0#83#0" expanded="true" />
           </folding>
