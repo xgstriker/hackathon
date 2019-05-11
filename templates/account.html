@@ -40,34 +40,45 @@
 			<input id="lat" name="lat" type="text">
 			<input id="lng" name="lng" type="text">
 			<input id="locname" name="locname" type="text" placeholder="Location name">
-			<button class="active mapsubmit" type="submit">SetLocation</button>
+			<button id="mapsubmit" class="mapsubmit noselect" type="submit">SetLocation</button>
 		</form>
 		
 		<div id="map"></div>
 
 
 		<script>
-			// Initialize and add the map
 			function initMap() {
-			  	// The location of Uluru
-			  	var uluru = {lat: {{ flat }}, lng: {{ flng }}};
 	
-			  	// The map, centered at Uluru
+			  	var init = {lat: {{ flat }}, lng: {{ flng }}};
 			  	var map = new google.maps.Map(
-			  	    document.getElementById('map'), {zoom: 18, center: uluru});
+			  	    document.getElementById('map'), {zoom: 18, center: init});
 	
-			  	// The marker, positioned at Uluru
 				var marker = new google.maps.Marker({
-				    position: uluru,
+				    position: {
+				    	lat: {{ flat }}, 
+				    	lng: {{ flng }}
+				    },
 				    map: map,
 				    draggable:true,
 				    title:"Drag me!"
 				});
 
+				{% for pos in positions %}
+					var stablemarker = new google.maps.Marker({
+					    position: {{pos}},
+					    map: map,
+    					icon: {
+    					  url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+    					}
+					});
+				{% endfor %}
 
 				google.maps.event.addListener(marker, 'dragend', function (evt) {
 				    document.getElementById('lat').value = evt.latLng.lat().toFixed(4);
 				    document.getElementById('lng').value = evt.latLng.lng().toFixed(4);
+  					var element = document.getElementById("mapsubmit");
+  					element.classList.add("active");
+  					element.classList.remove("noselect");
 				});
 
   			}

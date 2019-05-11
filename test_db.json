@@ -1,1 +1,1 @@
-{"_default": {}, "User": {}, "Loc": {"1": {"lat": "", "lng": "", "locname": "Hello"}, "2": {"lat": "54.6840", "lng": "25.2847", "locname": "Hello"}, "3": {"lat": "54.6840", "lng": "25.2846", "locname": "Hello"}, "4": {"lat": 54.6841, "lng": 25.2862, "locname": "Hello"}, "5": {"lat": 54.6839, "lng": 25.286, "locname": "another one"}}}
+{"_default": {}, "User": {}, "Loc": {"1": {"lat": "54.6842", "lng": "25.2853", "locname": "Hello"}, "2": {"lat": "54.6845", "lng": "25.2859", "locname": "another one"}, "3": {"lat": "54.6845", "lng": "25.2856", "locname": "New one"}}}

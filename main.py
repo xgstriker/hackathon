@@ -21,7 +21,7 @@ def index():
         rlat = 54.6841
         rlng = 25.2860
 
-        if abs(rlat-lat) < 0.01 and abs(rlng-lng) < 0.01:
+        if abs(rlat-lat) < 0.001 and abs(rlng-lng) < 0.01:
             return redirect(url_for("login"))
         else:
             return render_template("noaccess.html")
@@ -72,16 +72,24 @@ def account():
 
             num = request.cookies.get("num")
 
-            locations = ["","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
+            lats = []
+            lngs = []
+            locations = []
+            positions = []
             for x in range(1, int(num)):
-                locations[x-1] = data['Loc'][f'{x}']['locname']
-            response = render_template("account.html", locations=locations, flat=54.684144, flng=25.285807, name="Bolek")
+                lats.append(data['Loc'][f'{x}']['lat'])
+                lngs.append(data['Loc'][f'{x}']['lng'])
+                lat = data['Loc'][f'{x}']['lat']
+                lng = data['Loc'][f'{x}']['lng']
+                locations.append(data['Loc'][f'{x}']['locname'])
+                positions.append("{"+f"lat: {lat}, lng: {lng}"+"}")
+            response = make_response(render_template("account.html", locations=locations, lats=lats, flat=54.684144, lngs=lngs, flng=25.285807, positions=positions,  name="Bolek"))
 
             return response
         elif request.method == "POST":
             num = int(request.cookies.get("num"))
-            lat = float(request.form.get("lat"))
-            lng = float(request.form.get("lng"))
+            lat = request.form.get("lat")
+            lng = request.form.get("lng")
             locname = request.form.get("locname")
 
             # locations = {"lat": [""], "lng": [""], "locname": []}
@@ -93,8 +101,6 @@ def account():
             Loc.create(loc)
 
             num += 1
-
-            print(lat, lng, locname)
 
             response = make_response(render_template("success.html"))
 
