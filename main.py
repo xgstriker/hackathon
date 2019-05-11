@@ -100,7 +100,7 @@ def account():
             Loc.create(loc)
 
             num += 1
-
+            
             response = make_response(render_template("success.html"))
 
             response.set_cookie("num", str(num))
