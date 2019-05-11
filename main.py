@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, make_response, redirect, url_for
-from models import User, Loc
+from models import User, Loc, uID
 from _datetime import datetime, timedelta
 import ast
 import uuid, hashlib
@@ -13,7 +13,7 @@ app = Flask(__name__)
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if request.method == "GET":
-        return render_template("index.html", https=True)
+        return render_template("index.html")
     elif request.method == "POST":
         lat = float(request.form.get("lat"))
         lng = float(request.form.get("lng"))
@@ -37,24 +37,30 @@ def login():
         password = hashlib.sha256(request.form.get("password").encode()).hexdigest()
         uid = request.form.get("uid")
 
+        value_data = open("test_db.json", "r")
+        value = json.load(value_data)
+
         json_data = open("db.json", "r")
         data = json.load(json_data)
+        print(data)
 
-        user_name = data['User']['1']['name']
-        user_pass = data['User']['1']['password']
+        stop = data['User']['1']['name']
 
-        print(username, password, user_name, user_pass)
-        if user_pass != password:
-            return render_template("noaccess.html")
-        elif user_pass == password:
-            response = redirect(url_for("account"))
+        x = 1
+        while stop != "":
+            if data['User'][f"{x}"]['password'] == password and value["uID"][f"{x}"]['value'] == uid:
+                response = redirect(url_for("account"))
 
-            date = datetime.now() + timedelta(minutes=1)
-            session_token = uuid.uuid4()
+                date = datetime.now() + timedelta(minutes=1)
+                session_token = uuid.uuid4()
 
-            response.set_cookie("username", user_name, expires=date)
-            response.set_cookie("session_token", str(session_token), expires=date)
-            return response
+                response.set_cookie("username", username, expires=date)
+                response.set_cookie("session_token", str(session_token), expires=date)
+                return response
+            x += 1
+            stop = data['User'][f"{x}"]['name']
+
+        return render_template("noaccess.html")
 
 
 @app.route("/account", methods=['GET', 'POST'])
@@ -62,11 +68,6 @@ def account():
     cookies_session_token = request.cookies.get("session_token")
     if cookies_session_token:
         if request.method == "GET":
-        #     location = request.cookies.get("locations")
-        #
-        #     location = ast.literal_eval(location)
-        #     locations = location["locname"]
-
             json_data = open("test_db.json", "r")
             data = json.load(json_data)
 
@@ -83,7 +84,9 @@ def account():
                 lng = data['Loc'][f'{x}']['lng']
                 locations.append(data['Loc'][f'{x}']['locname'])
                 positions.append("{"+f"lat: {lat}, lng: {lng}"+"}")
-            response = make_response(render_template("account.html", locations=locations, lats=lats, flat=54.684144, lngs=lngs, flng=25.285807, positions=positions,  name="Bolek"))
+            username = request.cookies.get("username")
+            response = make_response(render_template("account.html", locations=locations, lats=lats, name=username, flat=54.6841,
+                                                     lngs=lngs, flng=25.2858, positions=positions))
 
             return response
         elif request.method == "POST":
@@ -91,11 +94,6 @@ def account():
             lat = request.form.get("lat")
             lng = request.form.get("lng")
             locname = request.form.get("locname")
-
-            # locations = {"lat": [""], "lng": [""], "locname": []}
-            # locations["lat"].append(lat)
-            # locations["lng"].append(lng)
-            # locations["locname"].append(locname)
 
             loc = Loc(lat, lng, locname)
             Loc.create(loc)
@@ -108,6 +106,29 @@ def account():
             return response
     else:
         return redirect(url_for("/"))
+
+
+@app.route("/admin", methods=['GET', 'POST'])
+def admin():
+    if request.method == "GET":
+        username = request.cookies.get("username")
+
+        response = make_response(render_template("admin.html", name=username))
+        return response
+    if request.method == "POST":
+        new_uid = request.form.get("uid")
+        new_username = request.form.get("username")
+        new_password = request.form.get("password")
+
+        user = User(name=new_username, password=new_password)
+        User.create(user)
+
+        uid = uID(value=new_uid)
+        uID.create(uid)
+
+        response = make_response(redirect(url_for("admin")))
+
+        return response
 
 
 if __name__ == "__main__":

@@ -18,3 +18,10 @@ class Loc(Model):
         super().__init__(**kwargs)
 
 
+class uID(Model):
+    def __init__(self, value, **kwargs):
+        self.value = value
+
+        super().__init__(**kwargs)
+
+

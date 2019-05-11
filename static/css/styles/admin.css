@@ -115,12 +115,8 @@ form {
 }
 .uid {
     position: absolute;
-    top: -50px;
-    left: 50%;
-    transform: translate(-50%, 0);
-    border: none;
+    top: 14vh;
 }
-
 input {
     height: 50px;   
     width: 100%;
