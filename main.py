@@ -16,7 +16,7 @@ def index():
 
         num = 1
         response = make_response(render_template("index.html"))
-        response.cookie.set("num", num)
+        response.cookies.set("num", num)
         return response
     elif request.method == "POST":
         lat = float(request.form.get("lat"))
