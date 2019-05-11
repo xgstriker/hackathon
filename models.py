@@ -6,19 +6,15 @@ class User(Model):
         self.name = name
         self.password = password
 
-
         super().__init__(**kwargs)
 
-    def get_name(self):
-        return self.name
 
-    def get_pass(self):
-        return self.password
+class Loc(Model):
+    def __init__(self, lat, lng, locname, **kwargs):
+        self.lat = lat
+        self.lng = lng
+        self.locname = locname
 
-    def get_lat(self):
-        return self.lat
-
-    def get_lng(self):
-        return self.lng
+        super().__init__(**kwargs)
 
 

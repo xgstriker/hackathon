@@ -27,20 +27,9 @@
 		
 		<div class="man_loc">Manage locations</div>
 		<ul class="locations">
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
-			<li>Location<img src="/static/images/close.svg" alt="Close"></li>
+			{% for locname in locations %}
+			    <li>{{locname}} <img src="/static/images/close.svg" alt="Close"></li>
+			{% endfor %}
 		</ul>
 
 		<div class="new-loc">Add location</div>
@@ -50,6 +39,7 @@
 		<form method="post" action="/account">
 			<input id="lat" name="lat" type="text">
 			<input id="lng" name="lng" type="text">
+			<input id="locname" name="locname" type="text" placeholder="Location name">
 			<button class="active mapsubmit" type="submit">SetLocation</button>
 		</form>
 		

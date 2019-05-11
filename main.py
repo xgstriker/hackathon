@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, make_response, redirect, url_for
-from models import User
+from models import User, Loc
+from _datetime import datetime, timedelta
+import ast
+import uuid, hashlib
 import json
 import os
 os.environ["TESTING"] = "1"
@@ -44,19 +47,61 @@ def login():
         if user_pass != password:
             return render_template("noaccess.html")
         elif user_pass == password:
-            return redirect(url_for("account"))
+            response = redirect(url_for("account"))
+
+            date = datetime.now() + timedelta(minutes=1)
+            session_token = uuid.uuid4()
+
+            response.set_cookie("username", user_name, expires=date)
+            response.set_cookie("session_token", str(session_token), expires=date)
+            return response
 
 
 @app.route("/account", methods=['GET', 'POST'])
 def account():
-    if request.method == "GET":
-        return render_template("account.html", flat=54.684144, flng=25.285807, name="Bolek")
-    elif request.method == "POST":
-        lat = request.form.get("lat")
-        lng = request.form.get("lng")
+    cookies_session_token = request.cookies.get("session_token")
+    if cookies_session_token:
+        if request.method == "GET":
+        #     location = request.cookies.get("locations")
+        #
+        #     location = ast.literal_eval(location)
+        #     locations = location["locname"]
 
-        response = render_template("success.html")
-        return response
+            json_data = open("test_db.json", "r")
+            data = json.load(json_data)
+
+            num = request.cookies.get("num")
+
+            locations = ["","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
+            for x in range(1, int(num)):
+                locations[x-1] = data['Loc'][f'{x}']['locname']
+            response = render_template("account.html", locations=locations, flat=54.684144, flng=25.285807, name="Bolek")
+
+            return response
+        elif request.method == "POST":
+            num = int(request.cookies.get("num"))
+            lat = float(request.form.get("lat"))
+            lng = float(request.form.get("lng"))
+            locname = request.form.get("locname")
+
+            # locations = {"lat": [""], "lng": [""], "locname": []}
+            # locations["lat"].append(lat)
+            # locations["lng"].append(lng)
+            # locations["locname"].append(locname)
+
+            loc = Loc(lat, lng, locname)
+            Loc.create(loc)
+
+            num += 1
+
+            print(lat, lng, locname)
+
+            response = make_response(render_template("success.html"))
+
+            response.set_cookie("num", str(num))
+            return response
+    else:
+        return redirect(url_for("/"))
 
 
 if __name__ == "__main__":
