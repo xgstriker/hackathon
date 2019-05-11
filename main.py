@@ -86,25 +86,23 @@ def account():
                     locations.append(data['Loc'][f'{x}']['locname'])
                     positions.append("{"+f"lat: {lat}, lng: {lng}"+"}")
             username = request.cookies.get("username")
-            response = make_response(render_template("account.html", locations=locations, lats=lats, name=username, flat=54.6841,
-                                                     lngs=lngs, flng=25.2858, positions=positions))
+            response = make_response(render_template("account.html", locations=locations, lats=lats, name=username, flat=54.6841, lngs=lngs, flng=25.2858, positions=positions))
 
             return response
         elif request.method == "POST":
             lat = request.form.get("lat")
             lng = request.form.get("lng")
             locname = request.form.get("locname")
-            # num = int(request.cookies.get("num"))
+            num = int(request.cookies.get("num"))
 
             loc = Loc(lat, lng, locname)
             Loc.create(loc)
 
-            # num += 1
+            num += 1
+            response = render_template("success.html")
 
-            response = make_response(render_template("success.html"))
-
-            # response.set_cookie("num", str(num))
-            return response
+            response.set_cookie("num", str(num))
+            return render_template("success.html")
 
 
 @app.route("/admin", methods=['GET', 'POST'])
