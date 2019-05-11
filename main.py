@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, make_response, redirect, url_for
 from models import User, Loc, uID
-from _datetime import datetime, timedelta
-import ast
-import uuid, hashlib
 import json
 import os
-os.environ["TESTING"] = "1"
+
+os.environ["GITHUB_CLIENT_ID"] = ""
+os.environ["GITHUB_CLIENT_SECRET"] = ""
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = "1"
 
 app = Flask(__name__)
 
@@ -91,19 +91,19 @@ def account():
 
             return response
         elif request.method == "POST":
-            num = int(request.cookies.get("num"))
             lat = request.form.get("lat")
             lng = request.form.get("lng")
             locname = request.form.get("locname")
+            # num = int(request.cookies.get("num"))
 
             loc = Loc(lat, lng, locname)
             Loc.create(loc)
 
-            num += 1
+            # num += 1
 
             response = make_response(render_template("success.html"))
 
-            response.set_cookie("num", str(num))
+            # response.set_cookie("num", str(num))
             return response
 
 
