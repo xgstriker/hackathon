@@ -68,8 +68,6 @@ def login():
 
 @app.route("/account", methods=['GET', 'POST'])
 def account():
-    cookies_session_token = request.cookies.get("session_token")
-    if cookies_session_token:
         if request.method == "GET":
             json_data = open("test_db.json", "r")
             data = json.load(json_data)
@@ -105,8 +103,6 @@ def account():
 
             response.set_cookie("num", str(num))
             return response
-    else:
-        return redirect(url_for("/"))
 
 
 @app.route("/admin", methods=['GET', 'POST'])
