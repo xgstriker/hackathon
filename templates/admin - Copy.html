@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Login from location</title>
+	<meta name="google-site-verification" content="DnzL6tfPAsp6xsVxB8jJ1lTbf-c0WE17ySbql2HChY4" />
+
+    <!-- styles -->
+    <link rel="stylesheet" href="/static/css/styles/admin.css">
+
+    <!-- JavaScript files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/static/js/common.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="/static/css/bootstrap/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/bootstrap.js"></script>
+</head>
+<body>
+	<div class="content">
+		<ul class="greetings">
+			<li>Hello <strong>{{ name }}</strong>,</li>
+		</ul>
+		<form class="row" method="post" action="/admin">
+			<input class="user" type="text" name="username" placeholder="Username">
+			<input class="pass" type="password" name="password" placeholder="Password">
+			<input class="uid" type="text" name="uid" placeholder="UID">
+			<button class="submit" type="submit">Submit</button>
+		</form>
+	</div>
+</body>
+</html>

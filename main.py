@@ -13,7 +13,6 @@ app = Flask(__name__)
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if request.method == "GET":
-
         num = 1
         response = make_response(render_template("index.html"))
         response.set_cookie("num", str(num))
@@ -22,13 +21,15 @@ def index():
         lat = request.form.get("lat")
         lng = request.form.get("lng")
 
+        print(lat, lng)
+
         if lat == "" or lng == "":
             return redirect(url_for("login"))
         else:
-            rlat = 54.6841
-            rlng = 25.2860
+            rlat = 54.6862681
+            rlng = 25.2669133
 
-            if abs(rlat-lat) < 0.01 and abs(rlng-lng) < 0.01:
+            if abs(float(rlat)-float(lat)) < 0.001 and abs(float(rlng)-float(lng)) < 0.001:
                 return redirect(url_for("login"))
             else:
                 return render_template("noaccess.html")

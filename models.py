@@ -24,4 +24,10 @@ class uID(Model):
 
         super().__init__(**kwargs)
 
+class Users(Model):
+    def __init__(self, value, **kwargs):
+        self.value = value
+
+        super().__init__(**kwargs)
+
 
