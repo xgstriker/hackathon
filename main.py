@@ -26,8 +26,8 @@ def index():
         if lat == "" or lng == "":
             return redirect(url_for("login"))
         else:
-            rlat = 54.6862681
-            rlng = 25.2669133
+            rlat = 54.7291136
+            rlng = 25.2297215
 
             if abs(float(rlat)-float(lat)) < 0.001 and abs(float(rlng)-float(lng)) < 0.001:
                 return redirect(url_for("login"))
