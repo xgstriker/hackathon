@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, make_response, redirect, url_for
-from models import User, Loc, uID
+from models import User, Loc, uID, Users
 from _datetime import datetime, timedelta
 import ast
 import uuid, hashlib
@@ -26,8 +26,8 @@ def index():
         if lat == "" or lng == "":
             return redirect(url_for("login"))
         else:
-            rlat = 54.6862681
-            rlng = 25.2669133
+            rlat = 54.6996223
+            rlng = 25.260032
 
             if abs(float(rlat)-float(lat)) < 0.001 and abs(float(rlng)-float(lng)) < 0.001:
                 return redirect(url_for("login"))
@@ -48,11 +48,8 @@ def login():
         value_data = open("test_db.json", "r")
         value = json.load(value_data)
 
-        json_data = open("db.json", "r")
-        data = json.load(json_data)
-
         for x in range(1, 3):
-            if data['User'][f"{x}"]['password'] == password and value["uID"][f"{x}"]['value'] == uid:
+            if value['User'][f"{x}"]['name'] == username and value['User'][f"{x}"]['password'] == password and value["uID"][f"{x}"]['value'] == uid:
                 response = redirect(url_for("account"))
 
                 date = datetime.now() + timedelta(minutes=1)
@@ -60,6 +57,7 @@ def login():
 
                 response.set_cookie("username", username, expires=date)
                 response.set_cookie("session_token", str(session_token), expires=date)
+                response.set_cookie("position", str(x))
                 return response
 
         return render_template("noaccess.html")
@@ -73,17 +71,22 @@ def account():
             json_data = open("test_db.json", "r")
             data = json.load(json_data)
 
-            lats = ["","","","","","","","","","","","","","","","","",""]
-            lngs = ["","","","","","","","","","","","","","","","","",""]
+            lats = []
+            lngs = []
             locations = []
             positions = []
-            num = int(request.cookies.get('num'))
-            for x in range(1, num):
-                if data['Loc'][f'{x}']['lat'] != "" or data['Loc'][f'{x}']['lng'] != "":
-                    lat = data['Loc'][f'{x}']['lat']
-                    lng = data['Loc'][f'{x}']['lng']
-                    locations.append(data['Loc'][f'{x}']['locname'])
-                    positions.append("{"+f"lat: {lat}, lng: {lng}"+"}")
+
+            json_data = open("test_db.json", "r")
+            users_id = json.load(json_data)
+
+            num = users_id['Users']['1']['value']
+            #
+            # for x in range(1, num):
+            #     if users_id['Loc'][f'{x}']['lat'] != "" or users_id['Loc'][f'{x}']['lng'] != "":
+            #         lat = data['Loc'][f'{x}']['lat']
+            #         lng = data['Loc'][f'{x}']['lng']
+            #         locations.append(data['Loc'][f'{x}']['location_name'])
+            #         positions.append("{"+f"lat: {lat}, lng: {lng}"+"}")
             username = request.cookies.get("username")
             response = make_response(render_template("account.html", locations=locations, lats=lats, name=username, flat=54.684, lngs=lngs, flng=25.2858, positions=positions))
 
@@ -94,7 +97,7 @@ def account():
             lng = request.form.get("lng")
             locname = request.form.get("locname")
 
-            loc = Loc(lat, lng, locname)
+            loc = Loc(lat, lng, locname, uid)
             Loc.create(loc)
 
             num += 1
@@ -115,15 +118,25 @@ def admin():
         response = make_response(render_template("admin.html", name=username))
         return response
     if request.method == "POST":
+        import hashlib
         new_uid = request.form.get("uid")
         new_username = request.form.get("username")
         new_password = request.form.get("password")
 
-        user = User(name=new_username, password=new_password)
+        hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
+
+        json_data = open("test_db.json", "r")
+        users_id = json.load(json_data)
+
+        map_id = users_id['Users']['1']['value']
+
+        user = User(name=new_username, password=hashed_password, map_id=map_id)
         User.create(user)
 
         uid = uID(value=new_uid)
         uID.create(uid)
+
+        Users.edit(obj_id=user_id, value=users)
 
         response = make_response(redirect(url_for("admin")))
 
