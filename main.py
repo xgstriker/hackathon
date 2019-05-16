@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, make_response, redirect, url_for
-from models import User, Loc, uID
+from models import User, Loc, uID, Users
 from _datetime import datetime, timedelta
 import ast
 import uuid, hashlib
@@ -26,10 +26,15 @@ def index():
         if lat == "" or lng == "":
             return redirect(url_for("login"))
         else:
+<<<<<<< HEAD
             rlat = 54.7291136
             rlng = 25.2297215
+=======
+            rlat = 54.6826067
+            rlng = 25.2833527
+>>>>>>> 11a890e3b6c001c68f34e40d415f105dd33dc352
 
-            if abs(float(rlat)-float(lat)) < 0.001 and abs(float(rlng)-float(lng)) < 0.001:
+            if abs(float(rlat)-float(lat)) < 0.01 and abs(float(rlng)-float(lng)) < 0.01:
                 return redirect(url_for("login"))
             else:
                 return render_template("noaccess.html")
@@ -48,11 +53,10 @@ def login():
         value_data = open("test_db.json", "r")
         value = json.load(value_data)
 
-        json_data = open("db.json", "r")
-        data = json.load(json_data)
+        num = value['Users']['1']['value'] + 1
 
-        for x in range(1, 3):
-            if data['User'][f"{x}"]['password'] == password and value["uID"][f"{x}"]['value'] == uid:
+        for x in range(1, num):
+            if value['User'][f"{x}"]['name'] == username and value['User'][f"{x}"]['password'] == password and value["uID"][f"{x}"]['value'] == uid:
                 response = redirect(url_for("account"))
 
                 date = datetime.now() + timedelta(minutes=1)
@@ -60,6 +64,7 @@ def login():
 
                 response.set_cookie("username", username, expires=date)
                 response.set_cookie("session_token", str(session_token), expires=date)
+                response.set_cookie("position", str(x))
                 return response
 
         return render_template("noaccess.html")
@@ -67,44 +72,60 @@ def login():
 
 @app.route("/account", methods=['GET', 'POST'])
 def account():
-    cookies_session_token = request.cookies.get("session_token")
-    if cookies_session_token:
         if request.method == "GET":
+            pos = int(request.cookies.get('position'))
+
+            lats = []
+            lngs = []
+            locations = []
+            positions = []
+
             json_data = open("test_db.json", "r")
             data = json.load(json_data)
 
-            lats = ["","","","","","","","","","","","","","","","","",""]
-            lngs = ["","","","","","","","","","","","","","","","","",""]
-            locations = []
-            positions = []
-            num = int(request.cookies.get('num'))
-            for x in range(1, num):
-                if data['Loc'][f'{x}']['lat'] != "" or data['Loc'][f'{x}']['lng'] != "":
+            users_id = data['Users']["1"]['value']
+
+            map_sum = int(data['User'][f"1"]['map_id']) + 1
+
+            if (users_id > 1):
+                for x in range(2, users_id):
+                    map_sum += int(data['User'][f"{x}"]['map_id'])
+
+            print(data['Loc'][f"{pos}"]['uid'], "\n", data['User'][f"{pos}"]['name'])
+            for x in range(1, map_sum):
+                if data['Loc'][f"{x}"]['lat'] != "" and data['Loc'][f"{x}"]['lng'] != "" and data['Loc'][f"{x}"]['uid'] == data['User'][f"{pos}"]['name']:
                     lat = data['Loc'][f'{x}']['lat']
                     lng = data['Loc'][f'{x}']['lng']
-                    locations.append(data['Loc'][f'{x}']['locname'])
+                    locations.append(data['Loc'][f'{x}']['location_name'])
                     positions.append("{"+f"lat: {lat}, lng: {lng}"+"}")
             username = request.cookies.get("username")
             response = make_response(render_template("account.html", locations=locations, lats=lats, name=username, flat=54.684, lngs=lngs, flng=25.2858, positions=positions))
 
             return response
         elif request.method == "POST":
-            num = int(request.cookies.get("num"))
+            pos = request.cookies.get("position")
             lat = request.form.get("lat")
             lng = request.form.get("lng")
             locname = request.form.get("locname")
 
-            loc = Loc(lat, lng, locname)
+            json_data = open("test_db.json", "r")
+            data = json.load(json_data)
+
+            id = data['User'][f"{pos}"]['name']
+
+            loc = Loc(lat, lng, locname, id)
             Loc.create(loc)
 
+            num = data['User'][f"{pos}"]['map_id']
+
             num += 1
+
+            User.edit(obj_id=pos, map_id=num)
 
             response = make_response(render_template("success.html"))
 
             response.set_cookie("num", str(num))
             return response
-    else:
-        return redirect(url_for("/"))
 
 
 @app.route("/admin", methods=['GET', 'POST'])
@@ -115,15 +136,29 @@ def admin():
         response = make_response(render_template("admin.html", name=username))
         return response
     if request.method == "POST":
+        import hashlib
         new_uid = request.form.get("uid")
         new_username = request.form.get("username")
         new_password = request.form.get("password")
 
-        user = User(name=new_username, password=new_password)
+        hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
+
+        json_data = open("test_db.json", "r")
+        data = json.load(json_data)
+
+        users_value = data['Users']['1']['value']
+
+        user = User(name=new_username, password=hashed_password, map_id=1)
         User.create(user)
 
         uid = uID(value=new_uid)
         uID.create(uid)
+
+        users_value += 1
+
+        user_id = 1
+
+        Users.edit(obj_id=user_id, value=users_value)
 
         response = make_response(redirect(url_for("admin")))
 
