@@ -26,13 +26,8 @@ def index():
         if lat == "" or lng == "":
             return redirect(url_for("login"))
         else:
-<<<<<<< HEAD
             rlat = 54.7291136
             rlng = 25.2297215
-=======
-            rlat = 54.6826067
-            rlng = 25.2833527
->>>>>>> 11a890e3b6c001c68f34e40d415f105dd33dc352
 
             if abs(float(rlat)-float(lat)) < 0.01 and abs(float(rlng)-float(lng)) < 0.01:
                 return redirect(url_for("login"))
@@ -102,7 +97,7 @@ def account():
             response = make_response(render_template("account.html", locations=locations, lats=lats, name=username, flat=54.684, lngs=lngs, flng=25.2858, positions=positions))
 
             return response
-        elif request.method == "POST":
+        else:
             pos = request.cookies.get("position")
             lat = request.form.get("lat")
             lng = request.form.get("lng")
@@ -148,7 +143,7 @@ def admin():
 
         users_value = data['Users']['1']['value']
 
-        user = User(name=new_username, password=hashed_password, map_id=1)
+        user = User(name=new_username, password=hashed_password, map_id=0)
         User.create(user)
 
         uid = uID(value=new_uid)
